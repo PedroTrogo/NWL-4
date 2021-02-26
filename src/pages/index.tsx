@@ -4,7 +4,7 @@ import ExperienceBar from "../components/ExperienceBar";
 import Proifile from "../components/Profile";
 import CompletedChallenges from "../components/CompletedChallenges";
 import Countdown from "../components/Countdown";
-import Button from "../components/Button";
+import ChanllengeBox from "../components/ChanllengeBox";
 
 import styles from "../styles/pages/Home.module.css";
 
@@ -23,6 +23,7 @@ export default function Home() {
 				<Countdown/>
 			</div>
 			<div>
+				<ChanllengeBox/>
 			</div>
 		</section>
     </div>

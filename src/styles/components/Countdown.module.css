@@ -33,3 +33,43 @@
 	font-size: 6.25rem;
 	margin: 0 0.5rem;
 }
+
+.buttonContainer {
+	display: flex;
+	width: 100%;
+	height: 5rem;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--blue);
+	margin-top: 2rem;
+	border-radius: 5px;
+
+	color: var(--white);
+	font-size: 1.25rem;
+	font-weight: 600;
+
+	transition: background-color 0.2s;
+}
+
+.buttonContainer:hover {
+	background: var(--blue-dark);
+}
+
+
+.buttonContainerActive {
+	background: var(--white);
+	color: var(--title);
+}
+
+
+.buttonContainerActive:hover {
+	background: var(--red);
+	color: var(--white);
+}
+
+.buttonContainer:disabled {
+	background: var(--white);
+	color: var(--text);
+	border-bottom: solid var(--green) 4px;
+}
