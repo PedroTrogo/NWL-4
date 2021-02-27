@@ -3,28 +3,30 @@ import styles from "../styles/components/ChallengeBox.module.css";
 import { useChallengesContext } from "../contexts/ChallengesContext";
 
 const ChalengeBox = () => {
-	const { 
-		hasChallengeInProgress, 
+	const {  
 		setHasChallengeInProgressState,
 		addChallengesCompletedAmount,
 		addCurrentXP,
 		currentChallenge,
+		setCurrentChallenge
 	} = useChallengesContext();
 
 	function handleChallengeFailed(){
 		setHasChallengeInProgressState(false);
+		setCurrentChallenge(null);
 	}
 
 	function handleChallengeCompleted(xp: number){
 		addCurrentXP(xp);
 		addChallengesCompletedAmount(1);
 		setHasChallengeInProgressState(false);
+		setCurrentChallenge(null);
 	}
 
 	return(
 		<div className={styles.container}>
 			{
-				!hasChallengeInProgress
+				!currentChallenge
 				?
 				<div className={styles.challengeNotActive}>
 					<strong>Inicie um ciclo para receber desafios a serem completados</strong>

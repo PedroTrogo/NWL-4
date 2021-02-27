@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ChallengeContext = createContext({});
 
@@ -14,19 +14,26 @@ export default function ChallengesContextProvider({ children }: IProps) {
 	const [hasChallengeInProgress, setHasChallengeInProgress] = useState(false);
 	const [challengesCompletedAmount, setChallengesCompletedAmount] = useState(0);
 	const [currentChallenge, setCurrentChallenge] = useState<IChallengeData | null>(null);
-	const baseXP = Math.pow((userLevel * 1) * 4, 2);
+	const baseXP = Math.pow((userLevel * 1) * 3, 2);
 
+	useEffect(() => {
+		Notification.requestPermission();
+		
+	}, [])
+	
 	function addCurrentXP(amount: number) {
-		const newXP = currentXP + amount;
+		let newXP = currentXP + amount;
+		let newBaseXP = baseXP;
+		let newLevel = userLevel;
 
-		if(newXP >= baseXP){
-			setUserLevel(userLevel + 1);
-			setCurrentXP(newXP - baseXP);
-		}
-		else{
-			setCurrentXP(currentXP + amount);
+		while(newXP >= newBaseXP){
+			newXP -= newBaseXP;
+			newLevel ++;
+			newBaseXP = Math.pow((newLevel * 1) * 4, 2);
 		}
 		
+		setUserLevel(newLevel);
+		setCurrentXP(newXP);
 	}
 
 	function addLevel(amount: number){
@@ -43,8 +50,17 @@ export default function ChallengesContextProvider({ children }: IProps) {
 
 	function startNewChallenge(){
 		const index = Math.floor(Math.random() *  ChallengesDB.length);
-		setCurrentChallenge(ChallengesDB[index]);
+		const chalenge = ChallengesDB[index];
+		setCurrentChallenge(chalenge);
 		setHasChallengeInProgress(true);
+		
+		if(Notification.permission === "granted"){
+			new Audio("./notification.mp3");
+			
+			new Notification("Novo desafio 🎉", {
+				body: `Valendo ${chalenge.amount}xp`,
+			});
+		}
 	}
 
 	return (

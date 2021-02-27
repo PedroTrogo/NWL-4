@@ -3,7 +3,7 @@ import styles from "../styles/components/Countdown.module.css";
 import { useChallengesContext } from "../contexts/ChallengesContext";
 
 let countdownTimeout: NodeJS.Timeout;
-const MAX_TIME =  0.1 * 60;
+const MAX_TIME =  0.05 * 60;
 
 const Countdown = () => {
 	const { 
@@ -25,6 +25,7 @@ const Countdown = () => {
 			}, 1000);
 		}else if(isActive && time === 0){
 			setHasCountdownFinished(true);
+			startNewChallenge();
 		}
 	}, [isActive, time]);
 
@@ -36,7 +37,6 @@ const Countdown = () => {
 
 	function startStopCountdown(){
 		setIsActive(!isActive);
-		startNewChallenge();
 		setHasCountdownFinished(false);
 	}
 
